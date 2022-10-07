@@ -1,24 +1,24 @@
+import {row, col, css} from './utils'
+
 function title(block) {
-    return `<div class="flex">
-                <div class="flex-col w-full">
-                    <h1 class="text-5xl text-center">${block.value}</h1>
-                </div>
-            </div>`
+    const {tag = h1, styles} = block.options; // Деструктуризация
+    //const tag = block.options.tag ?? 'h1';
+    //const styles = block.options.styles;
+    return row(col(`<${tag} class="text-5xl text-center text-white">${block.value}</${tag}>`), css(styles)) 
+            //`<div class="flex" style="${styles}">
+            //    <div class="flex-col w-full">
+            //        <${tag} class="text-5xl text-center text-white">${block.value}</${tag}>
+            //    </div>
+            //</div>`
 }
 
 function text(block) {
-    return `<div class="flex">
-                <div class="flex-col w-full">
-                    <p class="text-center">${block.value}</p>
-                </div>
-            </div>`
+    return row(col(`<p class="text-center">${block.value}</p>`),css(block.options.styles))  
 }
 
 function columns(block) {
-    const html = block.value.map(item => `<p class="text-center">${item}</p>`)
-    return `<div class="flex">
-                ${html.join('')}
-            </div>`
+    const html = block.value.map(col).join('');
+    return row(html, css(block.options.styles))
 }
 
 function image(block) {
