@@ -117,7 +117,30 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"img/image.png":[function(require,module,exports) {
+})({"classes/blocks.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Block = void 0;
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Block = /*#__PURE__*/_createClass(function Block(type, value, options) {
+  _classCallCheck(this, Block);
+
+  this.type = type;
+  this.value = value;
+  this.options = options;
+});
+
+exports.Block = Block;
+},{}],"img/image.png":[function(require,module,exports) {
 module.exports = "/image.8ef144c4.png";
 },{}],"js/model.js":[function(require,module,exports) {
 "use strict";
@@ -127,47 +150,40 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.model = void 0;
 
+var _blocks = require("../classes/blocks");
+
 var _image = _interopRequireDefault(require("../img/image.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var model = [{
-  type: 'title',
-  value: 'Конструктор сайтов на чистом JS',
-  options: {
-    tag: 'h2',
-    styles: {
-      background: 'linear-gradient(to&#32right,#ff0099,#493240)',
-      padding: '1.5rem'
-    }
+var model = [new _blocks.Block('title', 'Конструктор сайтов на чистом JS', {
+  tag: 'h2',
+  styles: {
+    background: 'linear-gradient(to&#32right,#ff0099,#493240)',
+    padding: '1.5rem'
   }
-}, {
-  type: 'image',
-  value: _image.default
-}, {
-  type: 'text',
-  value: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, aliquid?',
-  options: {
-    styles: {
-      background: 'linear-gradient(to&#32left,#f2994a,#f2c94c)',
-      padding: '1rem',
-      'font-weight': 'bold'
-    }
+}), new _blocks.Block('image', _image.default, {
+  styles: {
+    'justify-content': 'center',
+    margin: '2rem'
+  },
+  alt: 'Это картинка'
+}), new _blocks.Block('columns', ['Приложение на чистом JS, без использования библиотек', 'Узнать как работают принципы SOLID и ООП в JS за один курс', 'JavaScript - это просто, интересно. Научиться создавать любые UI своими руками'], {
+  styles: {
+    background: 'linear-gradient(to&#32bottom,#8e2de2,#4a00e0)',
+    padding: '2rem',
+    color: '#ffffff',
+    'font-weight': 'bold'
   }
-}, {
-  type: 'columns',
-  value: ['Приложение на чистом JS, без использования библиотек', 'Узнать как работают принципы SOLID и ООП в JS за один курс', 'JavaScript - это просто, интересно. Научиться создавать любые UI своими руками'],
-  options: {
-    styles: {
-      background: 'linear-gradient(to&#32bottom,#8e2de2,#4a00e0)',
-      padding: '2rem',
-      color: '#ffffff',
-      'font-weight': 'bold'
-    }
+}), new _blocks.Block('text', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, aliquid?', {
+  styles: {
+    background: 'linear-gradient(to&#32left,#f2994a,#f2c94c)',
+    padding: '1rem',
+    'font-weight': 'bold'
   }
-}];
+})];
 exports.model = model;
-},{"../img/image.png":"img/image.png"}],"js/utils.js":[function(require,module,exports) {
+},{"../classes/blocks":"classes/blocks.js","../img/image.png":"img/image.png"}],"js/utils.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -238,7 +254,11 @@ function columns(block) {
 }
 
 function image(block) {
-  return "<div class=\"flex justify-center\">\n                    <img src=\"".concat(block.value, "\" alt=\"images\" class=\"w-1/2\">\n            </div>");
+  var _block$options2 = block.options,
+      _block$options2$alt = _block$options2.alt,
+      alt = _block$options2$alt === void 0 ? '' : _block$options2$alt,
+      styles = _block$options2.styles;
+  return (0, _utils.row)("<img src=\"".concat(block.value, "\" alt=\"").concat(alt, "\" class=\"w-1/2\">"), (0, _utils.css)(styles));
 }
 
 var templates = {

@@ -22,9 +22,8 @@ function columns(block) {
 }
 
 function image(block) {
-    return `<div class="flex justify-center">
-                    <img src="${block.value}" alt="images" class="w-1/2">
-            </div>`
+    const {alt = '', styles} = block.options;
+    return row(`<img src="${block.value}" alt="${alt}" class="w-1/2">`, css(styles))
 }
 
 export const templates = {
